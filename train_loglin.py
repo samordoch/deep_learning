@@ -8,15 +8,14 @@ STUDENT={'name': 'YOUR NAME',
 def feats_to_vec(features):
     # YOUR CODE HERE.
     # Should return a numpy vector of features.
-    a=np.empty((0, len(features)),int)
+    fVec=np.zeros(in_dim)
     for f in features:
         if f in utils.F2I:
-            a=np.append(a,list(utils.F2I).index(f))
-        else:
-            a=np.append(a,-1)
-    print(a)
+            fVec[list(utils.F2I).index(f)]+=1
 
-    return a
+    print(fVec)
+
+    return fVec
 
 def accuracy_on_dataset(dataset, params):
     good = bad = 0.0
@@ -48,9 +47,19 @@ def train_classifier(train_data, dev_data, num_iterations, learning_rate, params
             x = feats_to_vec(features) # convert features to a vector.
             y =list(utils.L2I).index(label)                   # convert the label to number if needed.
             #i changed the parms to be induvidial
-            loss, grads = ll.loss_and_gradients(x,y,ll.create_classifier(len(x), out_dim))
+            #pn=ll.create_classifier(len(x), out_dim)
+            loss, grads = ll.loss_and_gradients(x,y,params)
             cum_loss += loss
             # YOUR CODE HERE
+            print("grad :",grads)
+
+            print("===============")
+            print("params :",params)
+            print("===============")
+
+            params=np.subtract(params,np.array(grads).dot(learning_rate))
+            print("params after change:",params)
+            print("===============")
             # update the parameters according to the gradients
             # and the learning rate.
 
@@ -58,13 +67,13 @@ def train_classifier(train_data, dev_data, num_iterations, learning_rate, params
         train_accuracy = accuracy_on_dataset(train_data, params)
         dev_accuracy = accuracy_on_dataset(dev_data, params)
         print (I, train_loss, train_accuracy, dev_accuracy)
-    return params
+    return pn
 
 if __name__ == '__main__':
     # YOUR CODE HERE
     # write code to load the train and dev sets, set up whatever you need,
     # and call train_classifier.
-    in_dim=50
+    in_dim=len(utils.F2I)
     out_dim=len(utils.L2I)
     train_data=utils.TRAIN
     dev_data=utils.DEV
