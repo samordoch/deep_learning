@@ -77,8 +77,8 @@ if __name__ == '__main__':
     out_dim=len(utils.L2I)
     train_data=utils.TRAIN
     dev_data=utils.DEV
-    num_iterations=1000
-    learning_rate=0.000000001
+    num_iterations=30
+    learning_rate=0.4
     # ...
    
     params = ll.create_classifier(in_dim, out_dim)
