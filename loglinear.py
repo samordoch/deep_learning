@@ -1,8 +1,10 @@
 import numpy as np
 import math
+import utils as ut
 
-STUDENT ={'name': 'sam mordoch',
-         'ID': '313295396'}
+
+STUDENT = {'name': 'sam mordoch ,dvir ben abu',
+           'ID': '313295396 204675235'}
 
 def softmax(x):
     """
@@ -113,6 +115,8 @@ if __name__ == '__main__':
         b = np.random.randn(b.shape[0])
         gradient_check(_loss_and_b_grad, b)
         gradient_check(_loss_and_W_grad, W)
+
+
 
 
     
